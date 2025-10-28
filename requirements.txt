@@ -1,0 +1,7 @@
+torch
+matplotlib
+numpy
+pillow
+scikit-image
+tqdm
+gradio
