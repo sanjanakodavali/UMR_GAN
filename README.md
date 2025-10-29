@@ -122,9 +122,4 @@ GitHub: https://github.com/sanjanakodavali
 
 ---
 
-## Acknowledgements
 
-- PyTorch & TorchVision teams  
-- Google Colab team  
-- Brain MRI dataset contributors (cite your exact source)  
-- Any prior repos or papers your training code is based on (e.g., Pix2Pix/conditional GANs)
