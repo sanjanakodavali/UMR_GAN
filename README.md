@@ -122,9 +122,7 @@ GitHub: https://github.com/sanjanakodavali
 
 ---
 
-<<<<<<< HEAD
 
-=======
 ## Acknowledgements
 
 - PyTorch & TorchVision teams  
