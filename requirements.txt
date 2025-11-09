@@ -1,7 +1,20 @@
+# Core DL
 torch
-matplotlib
-numpy
-pillow
-scikit-image
-tqdm
-gradio
+torchvision
+
+# Data & image processing
+albumentations>=1.4.0
+opencv-python-headless>=4.8.0.76
+Pillow>=10.0.0
+numpy>=1.26.0
+pandas>=2.0.0
+
+# Metrics & viz
+torchmetrics>=1.4.0
+matplotlib>=3.7.0
+
+# UI (Gradio 4.x for ImageEditor)
+gradio>=4.0.0
+
+# Utils
+tqdm>=4.66.0
