@@ -36,5 +36,6 @@ Restore MRI images that are corrupted by noise or missing regions so downstream 
 │   └── setup.ipynb
 ├── src/                     # main scripts (data, models, training)
 ├── ui/                      # Gradio/Streamlit/Flask app files (interface)
+│   └── app.ipynb
 ├── results/                 # checkpoints, samples, plots
 └── docs/                    # architecture diagrams, UI screenshots
