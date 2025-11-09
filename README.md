@@ -39,3 +39,43 @@ Restore MRI images that are corrupted by noise or missing regions so downstream 
 │   └── app.ipynb
 ├── results/                 # checkpoints, samples, plots
 └── docs/                    # architecture diagrams, UI screenshots
+
+
+---
+
+## Quick Start (Colab)
+
+1. Upload your dataset to Google Drive at `My Drive/training/` (4 class folders).
+2. Open **Colab** and run one of:
+   - `notebooks/setup_drive_only.ipynb` (recommended; uses your Drive folder directly)
+   - `notebooks/setup_colab.ipynb` (Drive link via `gdown` or ZIP)
+   - `notebooks/setup.ipynb` (simple Drive path variant)
+3. If needed, set:
+   ```python
+   from pathlib import Path
+   DATA_DIR = Path('/content/drive/MyDrive/training') ("https://drive.google.com/drive/folders/1VjGdzJbmKK14s2qK3ijMeiKtD6wJ6Fns?usp=sharing")
+4. Run all cells. You should see:
+    GPU/environment check
+    Class counts & corrupt-file scan
+    Random image grid and size distribution plots
+    DataLoader smoke test
+
+---
+
+## Local Setup
+Colab is easiest. For local runs with Python 3.12:
+
+# Clone
+git clone https://github.com/sanjanakodavali/UMR_GAN.git
+cd UMR_GAN
+
+# Create environment
+conda create -n umr-gan python=3.12 -y
+conda activate umr-gan
+
+# Install minimal CPU deps
+pip install torch torchvision pillow matplotlib pandas jupyter nbformat pyyaml
+
+# (Optional) Install CUDA build of torch for your system:
+# https://pytorch.org/get-started/locally/
+
