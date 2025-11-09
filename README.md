@@ -30,7 +30,7 @@ This project sets up a **GAN-based image restoration / image-to-image translatio
 
 ---
 
-## Local Installation (Optional)
+## Local Installation 
 
 > Colab is recommended to avoid CUDA setup. If you prefer local runs:
 
