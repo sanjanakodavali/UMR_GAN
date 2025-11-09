@@ -25,23 +25,16 @@ Restore MRI images that are corrupted by noise or missing regions so downstream 
 ---
 
 ## Repository Structure
-├── data/ # cleaned/processed data (4 class folders)
-├── notebooks/ # setup & UI demo notebooks
-│ ├── setup_drive_only.ipynb
-│ ├── setup_colab.ipynb
-│ └── setup.ipynb
-├── src/ # main scripts (data, models, training)
-│ ├── config/
-│ │ ├── base.yaml
-│ │ ├── train_denoise.yaml
-│ │ └── train_inpaint.yaml
-│ ├── data/ # MRISliceDataset + DataLoader
-│ ├── models/ # UNetG, PatchGAN D, losses, factory
-│ ├── training/ # loop, optimizers, checkpoints
-│ ├── metrics/ # PSNR/SSIM (LPIPS optional)
-│ ├── utils/ # config loader, seeding
-│ └── cli/
-│ └── train.py
-├── ui/ # Gradio/Streamlit/Flask app files (interface)
-├── results/ # plots, metrics.csv, qualitative triplets
-└── docs/ # architecture diagrams, UI screenshots
+├── data/                    # cleaned/processed data (4 class folders)
+│   ├── traning
+│   └── test
+├── notebooks/               # setup & UI demo notebooks
+│   ├── setup_drive_only.ipynb
+│   ├── setup_colab.ipynb
+│   └── setup.ipynb
+├── ui/                      # Gradio/Streamlit/Flask app files (interface)
+│   └── app.ipynb
+├── src/                     # main scripts (data, models, training)
+├── results/                 # checkpoints, samples, plots
+└── docs/                    # architecture diagrams, UI screenshots
+
