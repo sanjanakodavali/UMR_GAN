@@ -40,8 +40,18 @@ Restore MRI images that are corrupted by noise or missing regions so downstream 
 ├── results/                 # checkpoints, samples, plots
 └── docs/                    # architecture diagrams, UI screenshots
 
-```text
+---
 
+# UMR-GAN: Image Restoration / Translation on 4-Class Brain MRI
+
+UMR-GAN is a **mask-conditioned conditional GAN** (cGAN) for **denoising** and **inpainting** brain MRI slices. The project includes a Colab-ready setup, a modular `src/` training pipeline (PyTorch), and a Gradio UI for interactive inference.
+
+---
+
+## Project Purpose
+Restore MRI images corrupted by noise or missing regions so downstream tasks (clinical review, segmentation, radiomics) receive higher-quality inputs. We use a U-Net generator + multi-scale PatchGAN discriminator with a loss that mixes **mask-weighted L1**, **adversarial**, **SSIM**, and **perceptual** terms.
+
+---
 
 ## Quick Start (Colab)
 
