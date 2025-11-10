@@ -39,7 +39,7 @@ Restore MRI images that are corrupted by noise or missing regions so downstream 
 │   └── app.ipynb
 ├── results/                 # checkpoints, samples, plots
 └── docs/                    # architecture diagrams, UI screenshots
-
+```
 ---
 
 # UMR-GAN: Image Restoration / Translation on 4-Class Brain MRI
