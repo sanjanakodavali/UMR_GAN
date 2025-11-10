@@ -66,10 +66,10 @@ Restore MRI images corrupted by noise or missing regions so downstream tasks (cl
    DATA_DIR = Path('/content/drive/MyDrive/training') ("https://drive.google.com/drive/folders/1VjGdzJbmKK14s2qK3ijMeiKtD6wJ6Fns?usp=sharing")
 
 4. Run all cells. You should see:
-    GPU/environment check
-    Class counts & corrupt-file scan
-    Random image grid and size distribution plots
-    DataLoader smoke test
+    - GPU/environment check
+    - Class counts & corrupt-file scan
+    - Random image grid and size distribution plots
+    - DataLoader smoke test
 
 ---
 ```text
