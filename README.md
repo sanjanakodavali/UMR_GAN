@@ -155,7 +155,7 @@ python ui/app.py
 - Isola et al., *Image-to-Image Translation with Conditional Adversarial Networks*, CVPR 2017  
 - Ronneberger et al., *U-Net*, MICCAI 2015  
 - Wang et al., *SSIM*, IEEE T-IP 2004  
-- *(Add your dataset’s official citation)*
+- Anh Nguyen, *Satellite Imagery to Map Translation using Pix2Pix GAN framework* (GitHub repository): https://github.com/anh-nn01/Satellite-Imagery-to-Map-Translation-using-Pix2Pix-GAN-framework  
 
 ---
 
