@@ -118,14 +118,6 @@ pip install gradio
 python ui/app.py
 # then open the printed URL (e.g., http://127.0.0.1:7860)
 ```
-
-## Examples (Qualitative)
-
-Below are two sample triplets (left → input, middle → restored, right → target).  
-
-<img width="1076" height="369" alt="triplet_denoise_2_Te-glTr_0001" src="https://github.com/user-attachments/assets/b67028b0-c970-4155-a34c-c780d4d235dc" />
-<img width="1076" height="369" alt="triplet_inpaint_2_Te-glTr_0001" src="https://github.com/user-attachments/assets/e51e22b6-c3bd-407a-b2ea-34e32ca0de82" />
-
 ---
 ## Model Architecture
 
@@ -138,6 +130,11 @@ High-level diagram of the mask-conditioned cGAN used in UMR-GAN
 ---
 
 ## Current Results
+Below are two sample triplets (left → input, middle → restored, right → target).  
+
+<img width="1076" height="369" alt="triplet_denoise_2_Te-glTr_0001" src="https://github.com/user-attachments/assets/b67028b0-c970-4155-a34c-c780d4d235dc" />
+<img width="1076" height="369" alt="triplet_inpaint_2_Te-glTr_0001" src="https://github.com/user-attachments/assets/e51e22b6-c3bd-407a-b2ea-34e32ca0de82" />
+---
 - **UMR-GAN (held-out mean):** PSNR **34.231 dB**, SSIM **0.918**
 - **Baseline (Noisy→Clean):** PSNR **30.191 dB**, SSIM **0.749**
 - **Gain:** **+4.04 dB** PSNR, **+0.169** SSIM
