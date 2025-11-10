@@ -136,10 +136,7 @@ Below are two sample triplets (left → input, middle → restored, right → ta
 High-level diagram of the mask-conditioned cGAN used in UMR-GAN  
 (U-Net generator + multi-scale PatchGAN discriminator; losses mix mask-weighted L1, adversarial, SSIM, perceptual).
 
-![UMR-GAN Architecture](/Users/sanjanakodavali/Desktop/UMR_GAN/docs/Untitled diagram-2025-11-09-052152.png)
-
-> Place your architecture image at `docs/umr_gan_architecture.png`.  
-> If you keep the original file name, update the path (e.g., `docs/Untitled diagram-2025-11-09-052152.png`).
+![UMR-GAN Architecture](docs/umr_gan_architecture.png)
 
 ---
 
