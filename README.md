@@ -90,3 +90,30 @@ pip install torch torchvision pillow matplotlib pandas jupyter nbformat pyyaml
 # (Optional) Install CUDA build of torch for your system:
 # https://pytorch.org/get-started/locally/
 ```
+---
+## Training & Evaluation
+
+**Train (denoise):**
+```bash
+python -m src.cli.train --cfg src/config/train_denoise.yaml
+
+**Train (inpaint):**
+```bash
+python -m src.cli.train --cfg src/config/train_inpaint.yaml
+
+- Checkpoints/metrics are written to runs/exp_<hash>/ and results/.
+- Validation reports mean PSNR and SSIM each epoch.
+---
+## Launch the Gradio Interface
+
+### Colab notebook UI
+Open your UI notebook (e.g., `ui/app.ipynb`) and run all:
+- Upload or pick a sample slice
+- Choose **denoise** or **inpaint**
+- Click **Restore**, preview, and download
+
+### Local Python app
+```bash
+pip install gradio
+python ui/app.py
+# then open the printed URL (e.g., http://127.0.0.1:7860)
