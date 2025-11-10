@@ -123,21 +123,17 @@ python ui/app.py
 
 Below are two sample triplets (left → input, middle → restored, right → target).  
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/b67028b0-c970-4155-a34c-c780d4d235dc" alt="Denoising triplet" width="48%"/>
-  <img src="/Users/sanjanakodavali/Desktop/UMR_GAN/results/drive-download-20251109T025855Z-1-001/triplet_inpaint_2_Te-glTr_0001.png" alt="Inpainting triplet" width="48%"/>
-</p>
+<img width="1076" height="369" alt="triplet_denoise_2_Te-glTr_0001" src="https://github.com/user-attachments/assets/b67028b0-c970-4155-a34c-c780d4d235dc" />
+<img width="1076" height="369" alt="triplet_inpaint_2_Te-glTr_0001" src="https://github.com/user-attachments/assets/e51e22b6-c3bd-407a-b2ea-34e32ca0de82" />
 
 ---
-<img width="1076" height="369" alt="triplet_denoise_2_Te-glTr_0001" src="https://github.com/user-attachments/assets/b67028b0-c970-4155-a34c-c780d4d235dc" />
-
-
 ## Model Architecture
 
 High-level diagram of the mask-conditioned cGAN used in UMR-GAN  
 (U-Net generator + multi-scale PatchGAN discriminator; losses mix mask-weighted L1, adversarial, SSIM, perceptual).
 
-![UMR-GAN Architecture](docs/umr_gan_architecture.png)
+<img width="4506" height="1469" alt="Untitled diagram-2025-11-09-052152" src="https://github.com/user-attachments/assets/34fd51aa-1ba0-45cf-8e5b-2a50dd4166ea" />
+
 
 ---
 
