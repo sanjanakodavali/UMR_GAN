@@ -118,6 +118,31 @@ pip install gradio
 python ui/app.py
 # then open the printed URL (e.g., http://127.0.0.1:7860)
 ```
+
+## Examples (Qualitative)
+
+Below are two sample triplets (left → input, middle → restored, right → target).  
+> If your filenames differ, update the paths accordingly.
+
+<p align="center">
+  <img src="/Users/sanjanakodavali/Desktop/UMR_GAN/results/drive-download-20251109T025855Z-1-001/triplet_denoise_4_Te-glTr_0003.png" alt="Denoising triplet" width="48%"/>
+  <img src="/Users/sanjanakodavali/Desktop/UMR_GAN/results/drive-download-20251109T025855Z-1-001/triplet_inpaint_2_Te-glTr_0001.png" alt="Inpainting triplet" width="48%"/>
+</p>
+
+---
+
+## Model Architecture
+
+High-level diagram of the mask-conditioned cGAN used in UMR-GAN  
+(U-Net generator + multi-scale PatchGAN discriminator; losses mix mask-weighted L1, adversarial, SSIM, perceptual).
+
+![UMR-GAN Architecture](/Users/sanjanakodavali/Desktop/UMR_GAN/docs/Untitled diagram-2025-11-09-052152.png)
+
+> Place your architecture image at `docs/umr_gan_architecture.png`.  
+> If you keep the original file name, update the path (e.g., `docs/Untitled diagram-2025-11-09-052152.png`).
+
+---
+
 ## Current Results
 - **UMR-GAN (held-out mean):** PSNR **34.231 dB**, SSIM **0.918**
 - **Baseline (Noisy→Clean):** PSNR **30.191 dB**, SSIM **0.749**
