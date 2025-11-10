@@ -117,3 +117,51 @@ Open your UI notebook (e.g., `ui/app.ipynb`) and run all:
 pip install gradio
 python ui/app.py
 # then open the printed URL (e.g., http://127.0.0.1:7860)
+```
+## Current Results
+- **UMR-GAN (held-out mean):** PSNR **34.231 dB**, SSIM **0.918**
+- **Baseline (Noisy→Clean):** PSNR **30.191 dB**, SSIM **0.749**
+- **Gain:** **+4.04 dB** PSNR, **+0.169** SSIM
+
+**Qualitative triplets** are in `results/`:
+- `triplet_denoise_2_Te-glTr_0001.png`, `triplet_denoise_3_Te-glTr_0002.png`
+- `triplet_inpaint_1_Te-glTr_0000.png`, `triplet_inpaint_3_Te-glTr_0002.png`
+
+---
+
+## Known Issues & Troubleshooting
+- **Dataset shape:** requires **4** class subfolders. If different, update paths/class discovery.
+- **DICOM:** not yet supported; use PNG/JPEG for now. DICOM + window/level is planned.
+- **Single-slice inference:** 2.5D/3D support is on the roadmap.
+- **GAN stability:** if training diverges, try:
+  - Lower LR to `1e-4`
+  - Reduce `loss.l1` or `loss.ssim`
+  - Smaller batch size (e.g., `4`)
+- **Colab path errors:** set `DATA_DIR` explicitly in your notebook.
+
+---
+
+## Reproducibility Checklist
+- Python **3.12**; PyTorch **≥ 2.1** (Colab defaults OK)
+- Colab GPU enabled (**Runtime → Change runtime type → GPU**)
+- Dataset at `/content/drive/MyDrive/training` with **4** subfolders
+- Train with `src/config/train_denoise.yaml` or `src/config/train_inpaint.yaml`
+- Keep seeds/configs in `src/config/*.yaml` under version control
+
+---
+
+## Citations
+- Goodfellow et al., *Generative Adversarial Nets*, NeurIPS 2014  
+- Isola et al., *Image-to-Image Translation with Conditional Adversarial Networks*, CVPR 2017  
+- Ronneberger et al., *U-Net*, MICCAI 2015  
+- Wang et al., *SSIM*, IEEE T-IP 2004  
+- *(Add your dataset’s official citation)*
+
+---
+
+## Author
+**Aslesha Sanjana Kodavali**  
+Email: **sanjanakodavali10@gmail.com**  
+LinkedIn: https://www.linkedin.com/in/sanjana-kodavali-458555245  
+GitHub: https://github.com/sanjanakodavali
+
