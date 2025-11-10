@@ -11,6 +11,7 @@ UMR-GAN is a **mask-conditioned conditional GAN** (cGAN) for **denoising** and *
 - [Local Setup](#local-setup)
 - [Training & Evaluation](#training--evaluation)
 - [Launch the Gradio Interface](#launch-the-gradio-interface)
+- [Model Archirecture](#model-architecture)
 - [Current Results](#current-results)
 - [Known Issues & Troubleshooting](#known-issues--troubleshooting)
 - [Reproducibility Checklist](#reproducibility-checklist)
