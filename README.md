@@ -64,7 +64,7 @@ Restore MRI images corrupted by noise or missing regions so downstream tasks (cl
    ```python
    from pathlib import Path
    DATA_DIR = Path('/content/drive/MyDrive/training') ("https://drive.google.com/drive/folders/1VjGdzJbmKK14s2qK3ijMeiKtD6wJ6Fns?usp=sharing")
-```text
+
 4. Run all cells. You should see:
     GPU/environment check
     Class counts & corrupt-file scan
