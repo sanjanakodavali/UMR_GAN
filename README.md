@@ -72,7 +72,7 @@ Restore MRI images corrupted by noise or missing regions so downstream tasks (cl
     DataLoader smoke test
 
 ---
-
+```text
 ## Local Setup
 Colab is easiest. For local runs with Python 3.12:
 
@@ -89,4 +89,4 @@ pip install torch torchvision pillow matplotlib pandas jupyter nbformat pyyaml
 
 # (Optional) Install CUDA build of torch for your system:
 # https://pytorch.org/get-started/locally/
-
+```
