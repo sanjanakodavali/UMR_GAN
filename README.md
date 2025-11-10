@@ -96,11 +96,11 @@ pip install torch torchvision pillow matplotlib pandas jupyter nbformat pyyaml
 **Train (denoise):**
 ```bash
 python -m src.cli.train --cfg src/config/train_denoise.yaml
-
+```
 **Train (inpaint):**
 ```bash
 python -m src.cli.train --cfg src/config/train_inpaint.yaml
-
+```
 - Checkpoints/metrics are written to runs/exp_<hash>/ and results/.
 - Validation reports mean PSNR and SSIM each epoch.
 ---
