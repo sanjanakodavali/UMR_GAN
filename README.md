@@ -122,14 +122,15 @@ python ui/app.py
 ## Examples (Qualitative)
 
 Below are two sample triplets (left → input, middle → restored, right → target).  
-> If your filenames differ, update the paths accordingly.
 
 <p align="center">
-  <img src="/Users/sanjanakodavali/Desktop/UMR_GAN/results/drive-download-20251109T025855Z-1-001/triplet_denoise_4_Te-glTr_0003.png" alt="Denoising triplet" width="48%"/>
+  <img src="https://github.com/user-attachments/assets/b67028b0-c970-4155-a34c-c780d4d235dc" alt="Denoising triplet" width="48%"/>
   <img src="/Users/sanjanakodavali/Desktop/UMR_GAN/results/drive-download-20251109T025855Z-1-001/triplet_inpaint_2_Te-glTr_0001.png" alt="Inpainting triplet" width="48%"/>
 </p>
 
 ---
+<img width="1076" height="369" alt="triplet_denoise_2_Te-glTr_0001" src="https://github.com/user-attachments/assets/b67028b0-c970-4155-a34c-c780d4d235dc" />
+
 
 ## Model Architecture
 
