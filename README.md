@@ -1,132 +1,184 @@
-# UMR-GAN: Image Restoration / Translation on 4-Class MRI Dataset
+# UMR-GAN: Image Restoration / Translation on 4-Class Brain MRI
 
-This project sets up a **GAN-based image restoration / image-to-image translation** workflow on a brain MRI dataset organized into **four class folders** (e.g., `glioma/`, `meningioma/`, `pituitary/`, `notumor/`). The repository includes a Colab-ready setup notebook to verify your environment, load the dataset from Google Drive, and run early EDA (counts, sample grids, image size distributions) plus a PyTorch `DataLoader` smoke test.
+UMR-GAN is a **mask-conditioned conditional GAN** (cGAN) for **denoising** and **inpainting** brain MRI slices. The project includes a Colab-ready setup, a modular `src/` training pipeline (PyTorch), and a Gradio UI for interactive inference.
+
+---
+## Project Purpose
+Restore MRI images corrupted by noise or missing regions so downstream tasks (clinical review, segmentation, radiomics) receive higher-quality inputs. We use a U-Net generator + multi-scale PatchGAN discriminator with a loss that mixes **mask-weighted L1**, **adversarial**, **SSIM**, and **perceptual** terms.
+
+---
+
+## Table of Contents
+- [Project Purpose](#project-purpose)
+- [Repository Structure](#repository-structure)
+- [Quick Start (Colab)](#quick-start-colab)
+- [Local Setup](#local-setup)
+- [Training & Evaluation](#training--evaluation)
+- [Launch the Gradio Interface](#launch-the-gradio-interface)
+- [Model Archirecture](#model-architecture)
+- [Current Results](#current-results)
+- [Known Issues & Troubleshooting](#known-issues--troubleshooting)
+- [Reproducibility Checklist](#reproducibility-checklist)
+- [Citations](#citations)
+- [Author](#author)
+
+---
+
+## Project Purpose
+Restore MRI images that are corrupted by noise or missing regions so downstream tasks (clinical review, segmentation, radiomics) receive higher-quality inputs. We use a U-Net generator + multi-scale PatchGAN discriminator with a loss that mixes **mask-weighted L1**, **adversarial**, **SSIM**, and **perceptual** terms.
+
+---
+
+## Repository Structure
+
+```text
+├── data/                    # cleaned/processed data (4 class folders)
+│   ├── training
+│   └── test
+├── notebooks/               # setup & UI demo notebooks
+│   ├── training.ipynb
+│   ├── test.ipynb
+│   └── setup.ipynb
+├── src/                     # main scripts (data, models, training)
+├── ui/                      # Gradio/Streamlit/Flask app files (interface)
+│   └── app.ipynb
+├── results/                 # checkpoints, samples, plots
+└── docs/                    # architecture diagrams, UI screenshots
+```
+---
+
+
+
+## Project Purpose
+Restore MRI images corrupted by noise or missing regions so downstream tasks (clinical review, segmentation, radiomics) receive higher-quality inputs. We use a U-Net generator + multi-scale PatchGAN discriminator with a loss that mixes **mask-weighted L1**, **adversarial**, **SSIM**, and **perceptual** terms.
 
 ---
 
 ## Quick Start (Colab)
 
-1. **Upload your dataset to Google Drive** at:  
-   `My Drive/training/`  
-   (It must contain exactly 4 subfolders, one per class, each with images.)
-2. Open **Colab** and run the notebook:
-   - `setup_drive_only.ipynb` (recommended) — mounts Drive and **uses your Drive folder directly** (no downloads), or
-   - `setup_colab.ipynb` — multiple ingest options (Drive folder, Drive link via `gdown`, or local ZIP upload), or
-   - `setup.ipynb` — simple Drive path variant.
-3. In the notebook, if needed, set:
+1. Upload your dataset to Google Drive at `My Drive/training/` (4 class folders).
+2. Open **Colab** and run one of:
+   - `notebooks/setup_drive_only.ipynb` (recommended; uses your Drive folder directly)
+   - `notebooks/setup_colab.ipynb` (Drive link via `gdown` or ZIP)
+   - `notebooks/setup.ipynb` (simple Drive path variant)
+3. If needed, set:
    ```python
    from pathlib import Path
-   DATA_DIR = Path('/content/drive/MyDrive/training')
-   ```
-4. **Run all cells**. You should see:
-   - Environment & GPU check
-   - Class counts table (4 classes)
-   - Corrupt-file scan summary
-   - Random image grid
-   - Image size histograms + scatter
-   - PyTorch `ImageFolder` + `DataLoader` sample batch
+   DATA_DIR = Path('/content/drive/MyDrive/training') ("https://drive.google.com/drive/folders/1VjGdzJbmKK14s2qK3ijMeiKtD6wJ6Fns?usp=sharing")
 
-> If your folder is not exactly `MyDrive/training`, update the path accordingly.
+4. Run all cells. You should see:
+    - GPU/environment check
+    - Class counts & corrupt-file scan
+    - Random image grid and size distribution plots
+    - DataLoader smoke test
 
 ---
+```text
+## Local Setup
+Colab is easiest. For local runs with Python 3.12:
 
-## Local Installation 
+# Clone
+git clone https://github.com/sanjanakodavali/UMR_GAN.git
+cd UMR_GAN
 
-> Colab is recommended to avoid CUDA setup. If you prefer local runs:
-
-```bash
-# Clone and enter
-git clone <your-repo-url>.git
-cd <your-repo-name>
-
-# Create environment (Python 3.12 recommended)
+# Create environment
 conda create -n umr-gan python=3.12 -y
 conda activate umr-gan
 
-# Install packages (CPU)
-pip install torch torchvision pillow matplotlib pandas jupyter nbformat gdown
+# Install minimal CPU deps
+pip install torch torchvision pillow matplotlib pandas jupyter nbformat pyyaml
 
-# (Optional) If you have a CUDA GPU, install the matching torch build from https://pytorch.org/get-started/locally/
-# Example: pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
-
-# Launch Jupyter
-jupyter lab
+# (Optional) Install CUDA build of torch for your system:
+# https://pytorch.org/get-started/locally/
 ```
-
-Then open `setup.ipynb` and set your local `DATA_DIR` to your dataset folder (same 4-class structure).
-
 ---
+## Training & Evaluation
 
-## How to Run the Notebook
-
-- **Colab:** Upload `setup_drive_only.ipynb` to Colab and **Run all**.  
-  It will mount Drive and look for `/content/drive/MyDrive/training`.  
-  If your path differs, set `DATA_DIR` manually in the notebook.
-- **Local:** Open `setup.ipynb` with Jupyter/Lab, set `DATA_DIR` to point to your dataset, then run all.
-
-The notebook will **save visible outputs** (plots and tables) and print a final success message when all checks pass.
-
----
-
-## Dataset Information
-
-- **Expected layout in Drive**
-  ```
-  My Drive/
-    training/
-      class_a/
-      class_b/
-      class_c/
-      class_d/
-  ```
-  Replace `class_*` with your actual class names (e.g., `glioma`, `meningioma`, `pituitary`, `notumor`).
-
-- **Format:** Images (`.jpg`, `.jpeg`, `.png`, `.bmp`, `.tiff`, `.gif`) in four subfolders, one per class.
-- **Source:** If you are using public MRI data, cite the source accordingly.
-  - Example (placeholder): BrainWeb simulated brain database — https://brainweb.bic.mni.mcgill.ca/brainweb/  
-    *(Replace with your true data source and citation if different.)*
-- **Ethics & licensing:** Ensure you have the right to use and share the dataset. Remove any PHI/PII and follow license terms for redistribution.
-
----
-
-##  Reproducibility Checklist
-
-- Python `3.12.x`  
-- PyTorch `2.8.0` / TorchVision `0.23.0` (Colab defaults are fine)  
-- Colab GPU (e.g., **Tesla T4**) enabled via **Runtime → Change runtime type → GPU**  
-- Dataset at `/content/drive/MyDrive/training` with **exactly 4** image subfolders  
-- Run `setup_drive_only.ipynb` top-to-bottom without errors
-
----
-
-##  Repo Structure 
-
+**Train (denoise):**
+```bash
+python -m src.cli.train --cfg src/config/train_denoise.yaml
 ```
-.
-├── notebooks/
-│   └── setup.ipynb              # Simple Drive path variant
-├── README.md
-└── ( GAN training code and configs)
+**Train (inpaint):**
+```bash
+python -m src.cli.train --cfg src/config/train_inpaint.yaml
 ```
+- Checkpoints/metrics are written to runs/exp_<hash>/ and results/.
+- Validation reports mean PSNR and SSIM each epoch.
+---
+## Launch the Gradio Interface
 
-> You can keep notebooks in a `notebooks/` folder or root—just update paths if you move them.
+### Colab notebook UI
+Open your UI notebook (e.g., `ui/app.ipynb`) and run all:
+- Upload or pick a sample slice
+- Choose **denoise** or **inpaint**
+- Click **Restore**, preview, and download
+
+### Local Python app
+```bash
+pip install gradio
+python ui/app.py
+# then open the printed URL (e.g., http://127.0.0.1:7860)
+```
+---
+## Model Architecture
+
+High-level diagram of the mask-conditioned cGAN used in UMR-GAN  
+(U-Net generator + multi-scale PatchGAN discriminator; losses mix mask-weighted L1, adversarial, SSIM, perceptual).
+
+<img width="4506" height="1469" alt="Untitled diagram-2025-11-09-052152" src="https://github.com/user-attachments/assets/34fd51aa-1ba0-45cf-8e5b-2a50dd4166ea" />
+
 
 ---
 
-##  Author
+## Current Results
+Below are two sample triplets (left → input, middle → restored, right → target).  
 
+<img width="1076" height="369" alt="triplet_denoise_2_Te-glTr_0001" src="https://github.com/user-attachments/assets/b67028b0-c970-4155-a34c-c780d4d235dc" />
+<img width="1076" height="369" alt="triplet_inpaint_2_Te-glTr_0001" src="https://github.com/user-attachments/assets/e51e22b6-c3bd-407a-b2ea-34e32ca0de82" />
+
+- **UMR-GAN (held-out mean):** PSNR **34.231 dB**, SSIM **0.918**
+- **Baseline (Noisy→Clean):** PSNR **30.191 dB**, SSIM **0.749**
+- **Gain:** **+4.04 dB** PSNR, **+0.169** SSIM
+
+**Qualitative triplets** are in `results/`:
+- `triplet_denoise_2_Te-glTr_0001.png`, `triplet_denoise_3_Te-glTr_0002.png`
+- `triplet_inpaint_1_Te-glTr_0000.png`, `triplet_inpaint_3_Te-glTr_0002.png`
+
+---
+
+## Known Issues & Troubleshooting
+- **Dataset shape:** requires **4** class subfolders. If different, update paths/class discovery.
+- **DICOM:** not yet supported; use PNG/JPEG for now. DICOM + window/level is planned.
+- **Single-slice inference:** 2.5D/3D support is on the roadmap.
+- **GAN stability:** if training diverges, try:
+  - Lower LR to `1e-4`
+  - Reduce `loss.l1` or `loss.ssim`
+  - Smaller batch size (e.g., `4`)
+- **Colab path errors:** set `DATA_DIR` explicitly in your notebook.
+
+---
+
+## Reproducibility Checklist
+- Python **3.12**; PyTorch **≥ 2.1** (Colab defaults OK)
+- Colab GPU enabled (**Runtime → Change runtime type → GPU**)
+- Dataset at `/content/drive/MyDrive/training` with **4** subfolders
+- Train with `src/config/train_denoise.yaml` or `src/config/train_inpaint.yaml`
+- Keep seeds/configs in `src/config/*.yaml` under version control
+
+---
+
+## Citations
+- Goodfellow et al., *Generative Adversarial Nets*, NeurIPS 2014  
+- Isola et al., *Image-to-Image Translation with Conditional Adversarial Networks*, CVPR 2017  
+- Ronneberger et al., *U-Net*, MICCAI 2015  
+- Wang et al., *SSIM*, IEEE T-IP 2004  
+- Anh Nguyen, *Satellite Imagery to Map Translation using Pix2Pix GAN framework* (GitHub repository): https://github.com/anh-nn01/Satellite-Imagery-to-Map-Translation-using-Pix2Pix-GAN-framework  
+
+---
+
+## Author
 **Aslesha Sanjana Kodavali**  
-Email: <sanjanakodavali10@gmail.com>  
+Email: **sanjanakodavali10@gmail.com**  
 LinkedIn: https://www.linkedin.com/in/sanjana-kodavali-458555245  
 GitHub: https://github.com/sanjanakodavali
-
----
-
-
-## Acknowledgements
-
-- PyTorch & TorchVision teams  
-- Google Colab team  
-- Brain MRI dataset contributors (brainweb)  
-- Any prior repos or papers your training code is based on (e.g., Pix2Pix/conditional GANs)
 
