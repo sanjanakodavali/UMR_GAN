@@ -1,13 +1,44 @@
-UMR-GAN is a mask-conditioned image-to-image translation model based on the pix2pix family. Instead of mapping directly from a noisy MRI slice to a clean one, the generator is conditioned on a 2-channel input:
-Channel 1 → noisy (or partially corrupted) slice
-Channel 2 → binary mask (1 where pixels are missing / unreliable, 0 elsewhere)
-This lets the model treat denoising and inpainting in a unified way. Denoising corresponds to a zero mask; inpainting corresponds to a user-drawn mask over missing regions. The discriminator is a PatchGAN, so it judges local patches rather than whole images, which encourages sharper textures and more realistic local detail.
-The model is trained end-to-end with a combination of:
-Adversarial loss (PatchGAN) – “look realistic”
-Mask-weighted L1 loss – “stay close to ground truth, especially under the mask”
-SSIM loss – “preserve structure/contrast”
-Perceptual loss – “match high-level features from a pretrained network”
-So the generator learns not just to denoise/inpaint, but to do so in a way that preserves fine anatomical details.
+# UMR-GAN: Image Restoration / Translation on 4-Class Brain MRI
+
+UMR-GAN is a **mask-conditioned image-to-image translation model** based on the pix2pix family.  
+It restores noisy or partially missing brain MRI slices using a U-Net generator and a PatchGAN discriminator.
+
+> ⚠️ **Research prototype only** – This tool is for experimental use only and must **not** be used for clinical diagnosis or treatment decisions.  
+> Outputs may be inaccurate or uncertain and must always be reviewed by qualified clinicians.
+
+---
+
+## GAN Overview
+
+UMR-GAN treats denoising and inpainting in a **unified, mask-conditioned** way.
+
+- **Inputs to the generator**
+  - Channel 1: noisy / corrupted MRI slice  
+  - Channel 2: binary mask (1 = missing/unreliable pixels, 0 = trusted pixels)  
+  - Denoise = zero mask, Inpaint = user-drawn mask over missing regions
+
+- **Generator (U-Net)**
+  - Encoder–decoder with skip connections
+  - Downsampling blocks: Conv → Norm → LeakyReLU
+  - Upsampling blocks: UpConv → Norm → ReLU (+ skip connections)
+  - Final Conv + Tanh → single-channel restored slice in \[-1, 1\]
+
+- **Discriminator (PatchGAN)**
+  - Takes concatenated **(conditioning input, real or generated slice)**
+  - Series of Conv → Norm → LeakyReLU layers
+  - Outputs an **N×N patch score map** instead of a single scalar  
+    → encourages locally realistic textures and anatomy
+
+- **Training losses**
+  - Adversarial loss (PatchGAN): “look realistic”
+  - Mask-weighted L1 loss: “match ground truth, especially under the mask”
+  - SSIM loss: “preserve structure and contrast”
+  - Perceptual loss: “match high-level features in a pretrained network”
+
+The generator therefore learns not just to remove noise or fill gaps, but to do so while preserving fine anatomical detail.
+
+---
+
 
 > ⚠️ **Research prototype only** – This tool is for experimental use only and must **not** be used for clinical diagnosis or treatment decisions. Outputs may be inaccurate or uncertain and must always be reviewed by qualified clinicians.
 
