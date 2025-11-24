@@ -62,11 +62,6 @@ Restore MRI images that are corrupted by noise or missing regions so downstream 
 
 ---
 
-## Project Purpose
-Restore MRI images that are corrupted by noise or missing regions so downstream tasks (clinical review, segmentation, radiomics) receive higher-quality inputs. We use a U-Net generator + multi-scale PatchGAN discriminator with a loss that mixes **mask-weighted L1**, **adversarial**, **SSIM**, and **perceptual** terms.
-
----
-
 ## Repository Structure
 
 ```text
