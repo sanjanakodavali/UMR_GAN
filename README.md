@@ -40,10 +40,6 @@ The generator therefore learns not just to remove noise or fill gaps, but to do 
 ---
 
 
-> ⚠️ **Research prototype only** – This tool is for experimental use only and must **not** be used for clinical diagnosis or treatment decisions. Outputs may be inaccurate or uncertain and must always be reviewed by qualified clinicians.
-
----
-
 ## Project Purpose
 
 Restore MRI images that are corrupted by noise or missing regions so downstream tasks (clinical review, segmentation, radiomics) receive higher-quality inputs. We use a U-Net generator + multi-scale PatchGAN discriminator with a loss that mixes **mask-weighted L1**, **adversarial**, **SSIM**, and **perceptual** terms.
